@@ -44,7 +44,7 @@ const locationReducer = (state, action) => {
   }
 };
 
-const locationProvider = ({ children }) => {
+const LocationProvider = ({ children }) => {
   const [state, dispatch] = useReducer(locationReducer, initialState);
   return (
     <locationDispatchContext.Provider value={dispatch}>
@@ -55,4 +55,4 @@ const locationProvider = ({ children }) => {
   );
 };
 
-export { locationProvider, useLocation };
+export { LocationProvider, useLocation };

@@ -45,7 +45,7 @@ const profileReducer = (state, action) => {
   }
 };
 
-const profileProvider = ({ children }) => {
+const ProfileProvider = ({ children }) => {
   const [state, dispatch] = useReducer(profileReducer, initialState);
   return (
     <profileDispatchContext.Provider value={dispatch}>
@@ -56,4 +56,4 @@ const profileProvider = ({ children }) => {
   );
 };
 
-export { useProfile, profileProvider };
+export { useProfile, ProfileProvider };
