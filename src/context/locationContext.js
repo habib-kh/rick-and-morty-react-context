@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useReducer } from 'react';
+import api from '../services/api';
 
 const locationDispatchContext = createContext(null);
 const locationStateContext = createContext(null);
@@ -55,4 +56,14 @@ const LocationProvider = ({ children }) => {
   );
 };
 
-export { LocationProvider, useLocation };
+const getLocation = async (dispatch, locationURL) => {
+  dispatch({ type: 'loading', payload: true });
+  const apiData = await api.get(
+    `location/${locationURL.split('location/')[1]}`,
+  );
+  const location = apiData.data;
+  dispatch({ type: 'set', payload: location });
+  dispatch({ type: 'loading', payload: false });
+};
+
+export { LocationProvider, useLocation, getLocation };
