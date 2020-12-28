@@ -56,4 +56,12 @@ const ProfileProvider = ({ children }) => {
   );
 };
 
-export { useProfile, ProfileProvider };
+const getProfile = async (dispatch, profileId) => {
+  dispatch({type:'loading', payload:false};
+  const apiData = await api.get(`character/${profileId}`);
+  const profile = apiData.data;
+  dispatch({type:'set',payload:profile});
+  dispatch({type:'loading', payload:false});
+};
+
+export { useProfile, ProfileProvider, getProfile };
