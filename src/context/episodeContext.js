@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useReducer } from 'react';
+import api from '../services/api';
 
 const episodeDispatchContext = createContext(null);
 const episodeStateContext = createContext(null);
@@ -56,4 +57,19 @@ const EpisodeProvider = ({ children }) => {
   );
 };
 
-export { EpisodeProvider, useEpisode };
+const getEpisodes = async (dispatch, episodes) => {
+  dispatch({ type: 'loading', payload: true });
+  const apiData = await api.get(
+    `episode/${episodes.map((episode) => episode.split('episode/')[1])}`,
+  );
+  if (Array.isArray(apiData.data)) {
+    const episodesList = apiData.data;
+    dispatch({ type: 'set', payload: episodesList });
+  } else {
+    const episodesList = apiData.data;
+    dispatch({ type: 'set', payload: [episodesList] });
+  }
+  dispatch({ type: 'loading', payload: false });
+};
+
+export { EpisodeProvider, useEpisode, getEpisodes };
