@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useReducer } from 'react';
+import api from '../services/api';
 
 const profileDispatchContext = createContext(null);
 const profileStateContext = createContext(null);
@@ -57,11 +58,11 @@ const ProfileProvider = ({ children }) => {
 };
 
 const getProfile = async (dispatch, profileId) => {
-  dispatch({type:'loading', payload:false};
+  dispatch({ type: 'loading', payload: false });
   const apiData = await api.get(`character/${profileId}`);
   const profile = apiData.data;
-  dispatch({type:'set',payload:profile});
-  dispatch({type:'loading', payload:false});
+  dispatch({ type: 'set', payload: profile });
+  dispatch({ type: 'loading', payload: false });
 };
 
 export { useProfile, ProfileProvider, getProfile };
